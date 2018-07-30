@@ -10,7 +10,6 @@ local function setFrame(sp, def, index)
     if sp == nil then
         return
     end
-    print("setFrame")
 
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
 
@@ -22,7 +21,7 @@ local function setFrame(sp, def, index)
         --不带动画名的动画帧
         final = string.format("%s%d.png", def.spname, index)
     end
-    print("def.spname:",def.spname)
+    --print("setFrame def.spname:",def.spname, "Frame name:", final)
 
     local frame = spriteFrameCache:getSpriteFrame(final)
 
@@ -45,7 +44,8 @@ function SpriteAnim:Define(name, spname, frameCount, interval,  once)
         ["once"] = once,
         ["interval"] = interval,
         ["advanceFrame"] = function(defSelf)
-            defSelf.curFrame = defSelf.frameCount + 1
+            --print("advanceFrame:", defSelf.curFrame, defSelf.frameCount)
+            defSelf.curFrame = defSelf.curFrame + 1
             if defSelf.curFrame >= defSelf.frameCount then
                 defSelf.curFrame = 0
                 return false
@@ -61,10 +61,13 @@ function SpriteAnim:Define(name, spname, frameCount, interval,  once)
     --带动作
         self.anim[name] = def
     end
+    --print("Define:", name, spname, frameCount, interval, once)
+    --print("Define:", name, def[spname], def[frameCount])
 end
 
 function SpriteAnim:SetFrame(name, index)
     local def = self.anim[name]
+    --print("SetFrame:", name, def[spname], def[frameCount])
 
     if def == nil then
         return
@@ -78,11 +81,12 @@ function SpriteAnim:Play(name, callback)
     if def == nil then
         return
     end
+    --print("Play:", name, def, def["curFrame"], def["spname"], def["frameCount"])
 
     if def.shid == nil then
         def.shid = cc.Director:getInstance():getScheduler():scheduleScriptFunc(function()
             if def.running then
-                if def:advanceFrame() then
+                if def:advanceFrame(def) then
                     setFrame(self.sp, def, def.curFrame)
                 elseif def.once then
                     def.running = false

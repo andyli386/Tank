@@ -8,8 +8,12 @@ function Tank:ctor(node, name)
 
     self.dir = "up"
     self.spAnim = SpriteAnim.new(self.sp)
+
+    self.dx = 0
+    self.dy = 0
+    self.speed = 100
     --定义动画
-    self.spAnim:Define("run", name, 8, 0.1)
+    self.spAnim:Define("run", name, 8, 0.1, false)
     self.spAnim:SetFrame("run", 0)
     --local size = cc.Director:getInstance():getWinSize()
     --self.sp:setPosition(size.width/2, size.height/2)
@@ -21,20 +25,35 @@ function Tank:ctor(node, name)
 
 end
 
+function Tank:Update()
+    self:UpdatePosition(function(nextPosX, nextPosY)
+        end)
+end
+
 function Tank:SetDir(dir)
     if dir == nil then
+        self.dx = 0
+        self.dy = 0
         self.spAnim:Stop("run")
         return
     elseif dir == "left" then
+        self.dx = -self.speed
+        self.dy = 0
         self.sp:setRotation(-90)
         self.spAnim:Play("run")
     elseif dir == "right" then
+        self.dx = self.speed
+        self.dy = 0
         self.sp:setRotation(90)
         self.spAnim:Play("run")
     elseif dir == "up" then
+        self.dx = 0
+        self.dy = self.speed
         self.sp:setRotation(0)
         self.spAnim:Play("run")
     elseif dir == "down" then
+        self.dx = 0
+        self.dy = -self.speed
         self.sp:setRotation(180)
         self.spAnim:Play("run")
     end
@@ -42,6 +61,7 @@ function Tank:SetDir(dir)
 end
 
 function Tank:Destory()
+    self.spAnim:Destory()
     Tank.super.Destory(self)
 end
 
