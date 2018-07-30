@@ -1,3 +1,4 @@
+require("app.Common")
 local Object = class("Object")
 
 function Object:ctor(node)
@@ -14,6 +15,15 @@ end
 
 function Object:Alive()
     return self.sp ~= nil
+end
+
+function Object:GetPos()
+    return cc.exports.Pos2Grid(self.sp:getPositionX(), self.sp:getPositionY())
+end
+
+function Object:SetPos(x, y)
+    local posx, posy = cc.exports.Grid2Pos(x, y)
+    self.sp:setPosition(posx, posy)
 end
 
 function Object:UpdatePosition(callback)

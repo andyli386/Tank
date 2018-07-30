@@ -1,3 +1,5 @@
+require("app.Common")
+local Map = require("app.Map")
 local Tank = require("app.Tank")
 local PlayerTank = require("app.PlayerTank")
 
@@ -10,6 +12,8 @@ function MainScene:onCreate()
     --    :addTo(self)
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     spriteFrameCache:addSpriteFrames("res/tex.plist")
+
+    self.map = Map.new(self)
 
     local size = cc.Director:getInstance():getWinSize()
 
