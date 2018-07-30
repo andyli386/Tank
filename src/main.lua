@@ -1,6 +1,6 @@
 
 cc.FileUtils:getInstance():setPopupNotify(false)
-
+require "socket"
 require "config"
 require "cocos.init"
 
