@@ -2,9 +2,10 @@ local Object = require("app.Object")
 local SpriteAnim = require("app.SpriteAnim")
 local Tank = class("Tank", Object)
 
-function Tank:ctor(node, name)
+function Tank:ctor(node, name, map)
     Tank.super.ctor(self, node)
     self.node = node
+    self.map = map
 
     self.dir = "up"
     self.spAnim = SpriteAnim.new(self.sp)
@@ -27,6 +28,10 @@ end
 
 function Tank:Update()
     self:UpdatePosition(function(nextPosX, nextPosY)
+        local hit
+        hit = self.map:Collide(nextPosX, nextPosY, -5)
+        --print("Tank:Update, hit:", hit, nextPosX, nextPosY)
+        return hit
         end)
 end
 

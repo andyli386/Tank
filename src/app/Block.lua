@@ -99,6 +99,7 @@ function Block:updateImage()
 end
 
 function Block:Reset(type)
+    --print("Block:Reset,",self.x, self.y, type)
     local t = blockPropertyTable[type]
     assert(t)
 

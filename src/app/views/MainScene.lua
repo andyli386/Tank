@@ -17,8 +17,8 @@ function MainScene:onCreate()
 
     local size = cc.Director:getInstance():getWinSize()
 
-    self.tank = PlayerTank.new(self, "tank_green")
-    self.tank.sp:setPosition(size.width/2, size.height/2)
+    self.tank = PlayerTank.new(self, "tank_green", self.map)
+    self.tank:SetPos(5, 5)
 
     -- add HelloWorld label
     --cc.Label:createWithSystemFont("Hello World", "Arial", 40)

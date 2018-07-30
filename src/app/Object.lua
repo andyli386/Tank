@@ -26,6 +26,10 @@ function Object:SetPos(x, y)
     self.sp:setPosition(posx, posy)
 end
 
+function Object:GetRect()
+    return cc.exports.NewRect(self.sp:getPositionX(), self.sp:getPositionY())
+end
+
 function Object:UpdatePosition(callback)
     local delta = cc.Director:getInstance():getDeltaTime()
 

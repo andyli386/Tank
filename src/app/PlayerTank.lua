@@ -3,8 +3,8 @@ local Tank = require("app.Tank")
 
 local PlayerTank = class("PlayerTank", Tank)
 
-function PlayerTank:ctor(node, name)
-    PlayerTank.super.ctor(self, node, name)
+function PlayerTank:ctor(node, name, map)
+    PlayerTank.super.ctor(self, node, name, map)
     self.dirTable = {}
 end
 
