@@ -65,9 +65,9 @@ function Block:Break()
 
     self.hp = self.hp - 1
     if self.hp < 0 then
-        self.Reset("mud")
+        self:Reset("mud")
     else
-        self.updateImage()
+        self:updateImage()
     end
 end
 
