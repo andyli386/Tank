@@ -6,11 +6,11 @@ local MapHeight = 16
 
 local function GetIntPart(x)
     if x <= 0 then
-        return math.cell(x)
+        return math.ceil(x)
     end
 
     if math.ceil(x) == x then
-        x = math.cell(x)
+        x = math.ceil(x)
     else
         x = math.ceil(x) - 1
     end
@@ -46,8 +46,8 @@ local function NewRect(x, y, ex)
 
     return {
         left = x - cHalfGrid - ex,
-        right = x + cHalfGrid + ex,
         top = y + cHalfGrid + ex,
+        right = x + cHalfGrid + ex,
         bottom = y - cHalfGrid - ex,
 
         width = function(self)
@@ -63,37 +63,44 @@ local function NewRect(x, y, ex)
         end,
 
         tostring = function(self)
-            return string.format("%d %d %d %d ", self.left, self.top, self.right, self.bottom)
+            return string.format("%d %d %d %d %d %d %d", self.left, self.top, self.right, self.bottom, x, y, ex)
         end,
     }
 end
 
 local function RectInterset(r1, r2)
+    --print("Common:RectInterset", r1.left, r1.right, r2.left, r2.right)
     --print(r1:tostring(), r2:tostring())
     if r1:width() == 0 or r1:height() == 0 then
+        --print("Common: return r2")
         return r2
     end
     if r2:width() == 0 or r2:height() == 0 then
+        --print("Common: return r1")
         return r1
     end
 
     local left = math.max(r1.left, r2.left)
     if left >= r1.right or left >= r2.right then
+        --print("Common: left return nil,", r1.left, r1.right, r2.left, r2.right)
         return nil
     end
 
     local right = math.min(r1.right, r2.right)
     if right <= r1.left or right <= r2.left then
+        --print("Common: right return nil")
         return nil
     end
 
     local top = math.min(r1.top, r2.top)
     if top <= r1.bottom or top <= r2.bottom then
+        --print("Common: top return nil")
         return nil
     end
 
     local bottom = math.max(r1.bottom, r2.bottom)
     if bottom >= r1.top or left >= r2.top then
+        --print("Common: bottom return nil")
         return nil
     end
 

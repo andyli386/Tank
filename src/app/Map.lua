@@ -18,26 +18,29 @@ function Map:ctor(node)
         end
     end
 
+    --self:Set(3, 8, "grass")
+    --self:Set(5, 8, "steel")
+    --self:Set(7, 8, "brick")
+    --self:Set(9, 8, "water")
+    --self:Set(11, 8, "road")
+
     for x = 0, cc.exports.MapWidth - 1 do
         for y = 0, cc.exports.MapHeight - 1 do
             print(x, y, self:Get(x, y).type)
         end
     end
 
-    --self:Set(1, 8, "steel")
-    self:Set(3, 8, "grass")
-    self:Set(5, 8, "mud")
-    self:Set(7, 8, "brick")
-    self:Set(9, 8, "water")
-    self:Set(11, 8, "road")
 end
 
 function Map:Get(x, y)
+    --print("Map:Get,", x, y)
     if x < 0 or y < 0 then
+        --print("x < 0 or y < 0,", "x", x, "y", y)
         return nil
     end
 
     if x >= cc.exports.MapWidth or y >= cc.exports.MapHeight then
+        --print("x >= cc.exports.MapWidth or y >= cc.exports.MapHeight", "x", x, "y", y)
         return nil
     end
 
@@ -55,46 +58,44 @@ function Map:Set(x, y, type)
     block:Reset(type)
     block.x = x
     block.y = y
+    print("Map:Set", x*cc.exports.MapHeight + y, block.type)
 end
 
 --给定一个坐标和矩形，看是否碰到坐标下的方块
 function Map:collideWithBlock(r, x, y)
     local block = self:Get(x, y)
-    --print(r:tostring(), block:GetRect():tostring(), block.x, block.y)
-    --print("Map:collideWithBlock,", block.type)
+    print("Map:collideWithBlock block.type", block.type)
+    print("Map:collideWithBlock block.GetRect() ", block:GetRect():tostring())
 
+    --print("0, Map:collideWithBlock return nil" )
     --超出范围
     if block == nil then
-        --print("block == nil, return ")
         return nil
     end
+
+    --print("1, Map:collideWithBlock begin, before block.damping < 1" )
 
     --这个方块可以过去
     if block.damping < 1 then
-        --print("block.damping < 1, return")
         return nil
     end
 
-    if cc.exports.RectInterset(r, block:GetRect()) ~= nil then
+    --print("2, Map:collideWithBlock mid, before RectInterset" )
 
-        print(block["hp"],
-        block["needAP"],
-        block["damping"],
-        block["breakable"], block.type)
-        --print("return:", block)
+    if cc.exports.RectInterset(r, block:GetRect()) ~= nil then
         return block
     end
 
+    --print("3, Map:collideWithBlock end, before return" )
     return nil
 end
 
 function Map:Collide(posx, posy, ex)
+    --将坦克坐标转换成矩形
     local objRect = cc.exports.NewRect(posx, posy, ex)
-    for z = 0, cc.exports.MapWidth - 1 do
-        print("Map:Collide", cc.exports.MapWidth, z)
+    for x = 0, cc.exports.MapWidth - 1 do
         for y = 0, cc.exports.MapHeight - 1 do
-            --print("Map:Collide", cc.exports.MapWidth, cc.exports.MapHeight, z, y)
-            local b = self:collideWithBlock(objRect, z, y)
+            local b = self:collideWithBlock(objRect, x, y)
             if b ~= nil then
                 return b
             end
