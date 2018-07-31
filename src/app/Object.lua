@@ -30,6 +30,11 @@ function Object:GetRect()
     return cc.exports.NewRect(self.sp:getPositionX(), self.sp:getPositionY())
 end
 
+function Object:Stop()
+    self.dx = 0
+    self.dy = 0
+end
+
 function Object:UpdatePosition(callback)
     local delta = cc.Director:getInstance():getDeltaTime()
 
@@ -50,7 +55,7 @@ function Object:UpdatePosition(callback)
 end
 
 function Object:Destory()
-    if self.updateFuncID() then
+    if self.updateFuncID then
         cc.Director:getInstance():getScheduler():unscheduleScriptEntry(self.updateFuncID)
     end
 

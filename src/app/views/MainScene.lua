@@ -18,7 +18,7 @@ function MainScene:onCreate()
     local size = cc.Director:getInstance():getWinSize()
 
     self.tank = PlayerTank.new(self, "tank_green", self.map)
-    self.tank:SetPos(1, 4)
+    self.tank:SetPos(7, 4)
 
     -- add HelloWorld label
     --cc.Label:createWithSystemFont("Hello World", "Arial", 40)
@@ -62,6 +62,9 @@ function MainScene:ProcessInput()
                 --d
             elseif keyCode == 127 then
                 self.tank:MoveEnd("right")
+                --j
+            elseif keyCode == 133 then
+                self.tank:Fire()
             end
         end
     end, cc.Handler.EVENT_KEYBOARD_RELEASED)

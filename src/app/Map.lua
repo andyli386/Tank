@@ -18,11 +18,11 @@ function Map:ctor(node)
         end
     end
 
-    --self:Set(3, 8, "grass")
-    --self:Set(5, 8, "steel")
-    --self:Set(7, 8, "brick")
-    --self:Set(9, 8, "water")
-    --self:Set(11, 8, "road")
+    self:Set(3, 8, "grass")
+    self:Set(5, 8, "steel")
+    self:Set(7, 8, "brick")
+    self:Set(9, 8, "water")
+    self:Set(11, 8, "road")
 
 end
 
@@ -82,6 +82,21 @@ function Map:Collide(posx, posy, ex)
                 return b
             end
         end
+    end
+
+    return nil
+end
+
+function Map:Hit(posx, posy)
+    local x, y = cc.exports.Pos2Grid(posx, posy)
+    local block = self:Get(x, y)
+
+    if block == nill then
+        return nil, true
+    end
+
+    if block.breakable then
+        return block
     end
 
     return nil
