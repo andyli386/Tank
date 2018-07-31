@@ -30,7 +30,6 @@ function Tank:Update()
     self:UpdatePosition(function(nextPosX, nextPosY)
         local hit
         hit = self.map:Collide(nextPosX, nextPosY, -5)
-        --print("Tank:Update, hit:", hit, nextPosX, nextPosY)
         return hit
         end)
 end

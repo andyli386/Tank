@@ -69,42 +69,39 @@ local function NewRect(x, y, ex)
 end
 
 local function RectInterset(r1, r2)
-    --print("Common:RectInterset", r1.left, r1.right, r2.left, r2.right)
-    --print(r1:tostring(), r2:tostring())
     if r1:width() == 0 or r1:height() == 0 then
-        --print("Common: return r2")
         return r2
     end
     if r2:width() == 0 or r2:height() == 0 then
-        --print("Common: return r1")
         return r1
     end
 
     local left = math.max(r1.left, r2.left)
     if left >= r1.right or left >= r2.right then
-        --print("Common: left return nil,", r1.left, r1.right, r2.left, r2.right)
         return nil
     end
 
     local right = math.min(r1.right, r2.right)
     if right <= r1.left or right <= r2.left then
-        --print("Common: right return nil")
         return nil
     end
 
     local top = math.min(r1.top, r2.top)
     if top <= r1.bottom or top <= r2.bottom then
-        --print("Common: top return nil")
         return nil
     end
 
     local bottom = math.max(r1.bottom, r2.bottom)
-    if bottom >= r1.top or left >= r2.top then
-        --print("Common: bottom return nil")
+    if bottom >= r1.top or bottom >= r2.top then
         return nil
     end
 
-    return NewRect(left, top, right, bottom)
+    local x = left + cHalfGrid
+    local y = top - cHalfGrid
+
+    local rect = NewRect(x, y)
+
+    return rect
 end
 
 local function RectHit(r, x, y)

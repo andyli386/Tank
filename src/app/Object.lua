@@ -27,7 +27,6 @@ function Object:SetPos(x, y)
 end
 
 function Object:GetRect()
-    --print("Object:GetRect,",self.sp:getPositionX(), self.sp:getPositionY())
     return cc.exports.NewRect(self.sp:getPositionX(), self.sp:getPositionY())
 end
 
@@ -36,7 +35,6 @@ function Object:UpdatePosition(callback)
 
     local nextPosX = self.sp:getPositionX() + self.dx * delta
     local nextPosY = self.sp:getPositionY() + self.dy * delta
-    --print("UpdatePosition:", nextPosX, nextPosY)
 
     if callback(nextPosX, nextPosY) then
         return
