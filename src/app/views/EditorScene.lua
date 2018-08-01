@@ -21,7 +21,7 @@ end
 local editorFileName = "editor.lua"
 function EditorScene:ProcessInput()
     local listener = cc.EventListenerKeyboard:create()
-    
+
     listener:registerScriptHandler(function(keyCode, event)
         if self.tank ~= nil then
             --w
@@ -54,6 +54,5 @@ function EditorScene:ProcessInput()
     local eventDispatcher = self:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
 end
-
 
 return EditorScene

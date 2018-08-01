@@ -18,12 +18,6 @@ function Map:ctor(node)
         end
     end
 
-    self:Set(3, 8, "grass")
-    self:Set(5, 8, "steel")
-    self:Set(7, 8, "brick")
-    self:Set(9, 8, "water")
-    self:Set(11, 8, "road")
-
 end
 
 function Map:Get(x, y)

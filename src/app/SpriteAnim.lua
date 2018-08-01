@@ -21,6 +21,7 @@ local function setFrame(sp, def, index)
         --不带动画名的动画帧
         final = string.format("%s%d.png", def.spname, index)
     end
+    --print("setFrame def.spname:",def.spname, "Frame name:", final)
 
     local frame = spriteFrameCache:getSpriteFrame(final)
 
@@ -43,6 +44,7 @@ function SpriteAnim:Define(name, spname, frameCount, interval,  once)
         ["once"] = once,
         ["interval"] = interval,
         ["advanceFrame"] = function(defSelf)
+            --print("advanceFrame:", defSelf.curFrame, defSelf.frameCount)
             defSelf.curFrame = defSelf.curFrame + 1
             if defSelf.curFrame >= defSelf.frameCount then
                 defSelf.curFrame = 0
@@ -59,10 +61,13 @@ function SpriteAnim:Define(name, spname, frameCount, interval,  once)
     --带动作
         self.anim[name] = def
     end
+    --print("Define:", name, spname, frameCount, interval, once)
+    --print("Define:", name, def[spname], def[frameCount])
 end
 
 function SpriteAnim:SetFrame(name, index)
     local def = self.anim[name]
+    --print("SetFrame:", name, def[spname], def[frameCount])
 
     if def == nil then
         return
@@ -76,6 +81,7 @@ function SpriteAnim:Play(name, callback)
     if def == nil then
         return
     end
+    --print("Play:", name, def, def["curFrame"], def["spname"], def["frameCount"])
 
     if def.shid == nil then
         def.shid = cc.Director:getInstance():getScheduler():scheduleScriptFunc(function()
@@ -84,7 +90,7 @@ function SpriteAnim:Play(name, callback)
                     setFrame(self.sp, def, def.curFrame)
                 elseif def.once then
                     def.running = false
-                    cc.Director:getInstance():getScheduler():unscheduleScriptEntry(def.shid)
+                    cc.Director:getInstance():getScheduler():unscheduleScriptFunc(def.shid)
                     def.shid = nil
 
                     if callback ~= nil then
@@ -101,7 +107,7 @@ end
 function SpriteAnim:Stop(name)
     local def = self.anim[name]
     if def == nil then
-        return 
+        return
     end
 
     def.running = false
@@ -110,7 +116,7 @@ end
 function SpriteAnim:Destory()
     for name, def in pairs(self.anim) do
         if def.shid then
-            cc.Director:getInstance():getScheduler():unscheduleScriptEntry(def.shid)
+            cc.Director:getInstance():getScheduler():unschedulerScriptFunc(def.shid)
         end
     end
 
