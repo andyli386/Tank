@@ -90,7 +90,7 @@ function SpriteAnim:Play(name, callback)
                     setFrame(self.sp, def, def.curFrame)
                 elseif def.once then
                     def.running = false
-                    cc.Director:getInstance():getScheduler():unscheduleScriptFunc(def.shid)
+                    cc.Director:getInstance():getScheduler():unscheduleScriptEntry(def.shid)
                     def.shid = nil
 
                     if callback ~= nil then
