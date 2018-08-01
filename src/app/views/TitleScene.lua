@@ -14,7 +14,7 @@ function TitleScene:onCreate()
     self.map:Load("title.lua")
     self.tank = PlayerTank.new(self, "tank_green", self.map)
     --self.tank:PlaceCursor(MapWidth/2, MapHeight/2)
-    self.tank:SetPos(5, 1)
+    self.tank:SetPos(4, 1)
 --
     self:ProcessInput()
 
@@ -24,11 +24,10 @@ function TitleScene:ProcessInput()
     local listener = cc.EventListenerKeyboard:create()
 
     listener:registerScriptHandler(function(keyCode, event)
-        print(self.tank)
         if self.tank ~= nil then
                 --a
             if keyCode == 124 then
-                self.tank:SetPos(5, 1)
+                self.tank:SetPos(4, 1)
                 --d
             elseif keyCode == 127 then
                 self.tank:SetPos(11, 1)
@@ -36,7 +35,7 @@ function TitleScene:ProcessInput()
             elseif keyCode == 133 then
                 local sceneName
                 local x, _ = self.tank:GetPos()
-                if x == 5 then
+                if x == 4 then
                     sceneName = "app.views.MainScene"
                 else
                     sceneName = "app.views.EditorScene"
@@ -44,10 +43,8 @@ function TitleScene:ProcessInput()
 
                 local sceneLayer = require(sceneName)
                 local scene = sceneLayer.create()
-                display.runScene(scene, "fade", 0.6, display.COLOR_BLACK)
+                display.runScene(scene, "fade", 0.6)
 
-                --local scene = require(sceneName).new()
-                --display.runScene(scene, "fade", 0.6, display.COLOR_BLACK)
             end
         end
     end, cc.Handler.EVENT_KEYBOARD_RELEASED)
