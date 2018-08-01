@@ -1,4 +1,5 @@
 require("app.Common")
+require("app.Camp")
 local Map = require("app.Map")
 local Tank = require("app.Tank")
 local PlayerTank = require("app.PlayerTank")
@@ -13,12 +14,23 @@ function MainScene:onCreate()
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     spriteFrameCache:addSpriteFrames("res/tex.plist")
 
+    cc.exports.Camp_SetHostile("player", "enemy", true)
+    cc.exports.Camp_SetHostile("enemy", "player", true)
+
+    cc.exports.Camp_SetHostile("player.bullet", "enemy", true)
+    cc.exports.Camp_SetHostile("enemy.bullet", "player", true)
+
+    cc.exports.Camp_SetHostile("player.bullet", "enemy.bullet", true)
+    cc.exports.Camp_SetHostile("player.bullet", "enemy.bullet", true)
+
     self.map = Map.new(self)
 
     local size = cc.Director:getInstance():getWinSize()
 
-    self.tank = PlayerTank.new(self, "tank_green", self.map)
+    self.tank = PlayerTank.new(self, "tank_green", self.map, "player")
     self.tank:SetPos(7, 4)
+
+    Tank.new(self, "tank_blue", self.map, "enemy"):SetPos(3, 4)
 
     -- add HelloWorld label
     --cc.Label:createWithSystemFont("Hello World", "Arial", 40)

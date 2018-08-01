@@ -3,8 +3,8 @@ local SpriteAnim = require("app.SpriteAnim")
 local Tank = class("Tank", Object)
 local Bullet = require ("app.Bullet")
 
-function Tank:ctor(node, name, map)
-    Tank.super.ctor(self, node)
+function Tank:ctor(node, name, map, camp)
+    Tank.super.ctor(self, node, camp)
     self.node = node
     self.map = map
 
@@ -31,6 +31,11 @@ function Tank:Update()
     self:UpdatePosition(function(nextPosX, nextPosY)
         local hit
         hit = self.map:Collide(nextPosX, nextPosY, -5)
+
+        if hit == nil then
+            hit = self:CheckCollide(nextPosX, nextPosY)
+        end
+
         return hit
         end)
 end

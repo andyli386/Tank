@@ -20,7 +20,7 @@ end
 
 
 function Bullet:ctor(node, map, type, obj, dir)
-    Bullet.super.ctor(self, node)
+    Bullet.super.ctor(self, node, obj.camp .. ".bullet")
 
     self.dx, self.dy = getDeltaByDir(dir, 200)
     self.map = map
@@ -49,12 +49,27 @@ function Bullet:Update()
                     block:Break()
                 end
             end
+        else
+            local target = self:CheckHit(nextPosX, nextPosY)
+
+            if target then
+                target:Destory()
+                if iskindof(target, "bullet") then
+                    hit = "disappear"
+                    target.spAnim:Destory()
+                else
+                    hit = "explode"
+                end
+            end
         end
 
         if hit then
             self:Stop()
             if hit == "explode" then
                 self:Explode()
+            elseif hit == "disappear" then
+                self.spAnim:Destory()
+                self:Destory()
             end
         end
 
