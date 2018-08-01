@@ -116,7 +116,7 @@ end
 function SpriteAnim:Destory()
     for name, def in pairs(self.anim) do
         if def.shid then
-            cc.Director:getInstance():getScheduler():unschedulerScriptFunc(def.shid)
+           cc.Director:getInstance():getScheduler():unscheduleScriptEntry(def.shid)
         end
     end
 
