@@ -1,5 +1,6 @@
 require("app.Common")
 require("app.Camp")
+local Factory = require("app.Factory")
 local Map = require("app.Map")
 local Tank = require("app.Tank")
 local PlayerTank = require("app.PlayerTank")
@@ -25,12 +26,12 @@ function MainScene:onCreate()
 
     self.map = Map.new(self)
 
+    self.factory = Factory.new(self, self.map)
     local size = cc.Director:getInstance():getWinSize()
 
     self.tank = PlayerTank.new(self, "tank_green", self.map, "player")
     self.tank:SetPos(7, 4)
 
-    Tank.new(self, "tank_blue", self.map, "enemy"):SetPos(3, 4)
 
     -- add HelloWorld label
     --cc.Label:createWithSystemFont("Hello World", "Arial", 40)
@@ -77,6 +78,8 @@ function MainScene:ProcessInput()
                 --j
             elseif keyCode == 133 then
                 self.tank:Fire()
+            elseif keyCode == 134 then
+                self.factory:SpawnRandom()
             end
         end
     end, cc.Handler.EVENT_KEYBOARD_RELEASED)

@@ -8,6 +8,8 @@ function Tank:ctor(node, name, map, camp)
     self.node = node
     self.map = map
 
+    self.OnCollide = nil
+
     self.dir = "up"
     self.spAnim = SpriteAnim.new(self.sp)
 
@@ -34,6 +36,10 @@ function Tank:Update()
 
         if hit == nil then
             hit = self:CheckCollide(nextPosX, nextPosY)
+        end
+
+        if hit and self.OnCollide then
+            self.OnCollide(hit)
         end
 
         return hit
