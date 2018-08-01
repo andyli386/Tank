@@ -41,6 +41,7 @@ function MainScene:onCreate()
     self:ProcessInput()
 end
 
+
 function MainScene:ProcessInput()
     local listener = cc.EventListenerKeyboard:create()
     listener:registerScriptHandler(function(keyCode, event)
@@ -78,6 +79,7 @@ function MainScene:ProcessInput()
                 --j
             elseif keyCode == 133 then
                 self.tank:Fire()
+                --k
             elseif keyCode == 134 then
                 self.factory:SpawnRandom()
             end

@@ -87,6 +87,33 @@ function Map:Collide(posx, posy, ex)
     return nil
 end
 
+function Map:Save(filename)
+    local f = assert(io.open(filename, "w"))
+    f:write("return {\n")
+    for x = 0, MapWidth - 1 do
+        for y = 0, MapHeight - 1 do
+            local block = self:Get(x, y)
+            f:write(string.format("{x = %d, y = %d, type = '%s'}, \n", x, y, block.type))
+        end
+    end
+    f:write("}\n")
+    f:close()
+    print(filename .. " saved")
+end
+
+function Map:Load(filename)
+    local t = dofile(filename)
+    if t == nil then
+        return
+    end
+
+    for _, block in ipairs(t) do
+        self:Set(block.x, block.y, block.type)
+    end
+
+    print(filename .. " load")
+end
+
 function Map:Hit(posx, posy)
     local x, y = cc.exports.Pos2Grid(posx, posy)
     local block = self:Get(x, y)

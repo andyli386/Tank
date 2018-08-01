@@ -19,7 +19,7 @@ function TankCursor:PlaceCursor(x, y)
     self.x = GetIntPart(x)
     self.y = GetIntPart(y)
 
-    self.SetPos(self.x, self.y)
+    self:SetPos(self.x, self.y)
 end
 
 function TankCursor:MoveCursor(deltaX, deltaY)

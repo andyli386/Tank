@@ -108,6 +108,7 @@ local function RectHit(r, x, y)
     return x >= r.left and x <= r.right and y >= r.bottom and y <= r.top
 end
 
+cc.exports.GetIntPart = GetIntPart
 cc.exports.NewRect = NewRect
 cc.exports.RectHit = RectHit
 cc.exports.RectInterset = RectInterset
