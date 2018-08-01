@@ -5,9 +5,11 @@ local Map = require("app.Map")
 local Tank = require("app.Tank")
 local PlayerTank = require("app.PlayerTank")
 
-local MainScene = class("MainScene", cc.load("mvc").ViewBase)
+local MainScene = class("MainScene", function()
+    return display.newScene("MainScene")
+end)
 
-function MainScene:onCreate()
+function MainScene:ctor()
     -- add background image
     --display.newSprite("HelloWorld.png")
     --    :move(display.center)

@@ -4,9 +4,11 @@ require("app.Camp")
 local TankCursor = require("app.TankCursor")
 local Map = require("app.Map")
 
-local EditorScene = class("EditorScene", cc.load("mvc").ViewBase)
+local EditorScene = class("EditorScene", function()
+    return display.newScene("EditorScene")
+end)
 
-function EditorScene:onCreate()
+function EditorScene:ctor()
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     spriteFrameCache:addSpriteFrames("res/tex.plist")
 
