@@ -96,12 +96,14 @@ function Map:Save(filename)
 end
 
 function Map:Load(filename)
-    local t = dofile(filename)
-    if t == nil then
+    local requireName = "res." .. string.split(filename, ".")[1]
+    local f = assert(require(requireName))
+    --local f = dofile(filename)
+    if f == nil then
         return
     end
 
-    for _, block in ipairs(t) do
+    for _, block in ipairs(f) do
         self:Set(block.x, block.y, block.type)
     end
 

@@ -10,7 +10,7 @@ end)
 
 function EditorScene:ctor()
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-    spriteFrameCache:addSpriteFrames("res/tex.plist")
+    spriteFrameCache:addSpriteFrames("res/tex1.plist")
 
     self.map = Map.new(self)
     self.tank = TankCursor.new(self, "tank_green", self.map)
