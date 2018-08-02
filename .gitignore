@@ -112,3 +112,4 @@ fastlane/readme.md
 frameworks/cocos2d-x/
 .DS_Store
 frameworks/cocos2d-x
+.idea/
